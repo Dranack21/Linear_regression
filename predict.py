@@ -33,8 +33,9 @@ def main() -> float:
 	prediction = normalized_prediction * (max_price - min_price) + min_price #Denormalize
 	if (prediction < 0):
 		prediction = 0
-	visualize_data("data.csv", min_km, max_km, max_price, min_price)
-	print(prediction)
+	error = visualize_data("data.csv", min_km, max_km, max_price, min_price)
+	print(f"Price with given mileage :{prediction}")
+	print(f"Mean error: {error}%")
 	return (prediction)
 
 

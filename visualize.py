@@ -1,13 +1,12 @@
-import matplotlib
 from matplotlib import pyplot as plt
-import numpy as np
 import csv
 import os
 
-def visualize_data(file_path :str, min_km : float, max_km :float, max_price : float, min_price : float):
+def visualize_data(file_path :str, min_km : float, max_km :float, max_price : float, min_price) -> float:
 	x_values = []
 	y_values = []
 	y_regression = []
+	accuracy_list = []
 	f = open(file_path)
 	reader = csv.reader(f)
 	next(reader)
@@ -32,8 +31,17 @@ def visualize_data(file_path :str, min_km : float, max_km :float, max_price : fl
 		x = normalized_prediction * (max_price - min_price) + min_price
 		y_regression.append(x)
 	
+	for i in range (len(y_values)):
+		real_price = y_values[i]
+		predicted_price = y_regression[i]
+		accuracy_list.append(abs(real_price - predicted_price) / real_price * 100)
+
+	error = sum(accuracy_list)/len(accuracy_list)
+
+	
 	plt.plot(x_values ,y_regression, 'r')
 	plt.xlabel('Kilométrage')
 	plt.ylabel('Prix')
 	plt.xticks(rotation=45)  
 	plt.show()
+	return (error)
