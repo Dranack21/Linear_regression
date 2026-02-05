@@ -6,5 +6,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "dotenv>=0.9.9",
+    "matplotlib>=3.10.8",
     "numpy>=2.2.6",
+    "pyqt5>=5.15.11",
+    "pyside2>=5.15.2.1",
 ]

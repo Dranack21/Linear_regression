@@ -2,15 +2,16 @@ import sys
 import csv
 import os
 from dotenv import load_dotenv
+from visualize import visualize_data
 from train  import get_min_max
 load_dotenv()
 
 def main() -> float:
-	if len(sys.argv) != 2:
-		print("Error: expecting one argument.")
+	if len(sys.argv) != 1:
+		print("Error: expecting zero arguments.")
 		return(0.0)
 	try:
-		mileage :float = float(sys.argv[1])
+		mileage = float(input("Enter a mileage: "))
 	except ValueError:
 		print("Error: Invalid mileage value. Please provide a number.")
 		return(0.0)
@@ -26,10 +27,13 @@ def main() -> float:
 		print("Error: Invalid thetas values inside .env.")
 		return(0.0)
 	
-	min_km, max_km, min_price, max_price = get_min_max()
+	min_km, max_km, min_price, max_price = get_min_max() #Normalize
 	normalized_mileage = (mileage - min_km) / (max_km - min_km)
 	normalized_prediction = t0 + normalized_mileage * t1
-	prediction = normalized_prediction * (max_price - min_price) + min_price
+	prediction = normalized_prediction * (max_price - min_price) + min_price #Denormalize
+	if (prediction < 0):
+		prediction = 0
+	visualize_data("data.csv", max_price, min_price)
 	print(prediction)
 	return (prediction)
 
