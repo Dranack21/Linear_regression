@@ -33,7 +33,7 @@ def main() -> float:
 	prediction = normalized_prediction * (max_price - min_price) + min_price #Denormalize
 	if (prediction < 0):
 		prediction = 0
-	visualize_data("data.csv", max_price, min_price)
+	visualize_data("data.csv", min_km, max_km, max_price, min_price)
 	print(prediction)
 	return (prediction)
 
