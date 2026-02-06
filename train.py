@@ -59,6 +59,10 @@ def get_min_max() -> float:
 			max_price = price
 
 	f.close()
+	if max_km == min_km:
+		raise ValueError("All mileage values are identical - cannot train model")
+	if max_price == min_price:
+		raise ValueError("All price values are identical - cannot train model")
 	return min_km, max_km, min_price, max_price
 
 
@@ -111,7 +115,7 @@ def calculate_gradient(normalized_list : list, lr :float, theta0 :float, theta1 
 		estimated_price :float = theta0 + (theta1 * km)
 		# Calcul de l'erreur (difference avec estimated - prix)
 		error :float = estimated_price - price
-		# 99->103 = Formules de tmp0 tmp1 du sujet
+		#Formules de tmp0 tmp1 du sujet
 		sum_theta0 += error
 		sum_theta1 += error * km
 
@@ -142,7 +146,7 @@ def final_gradiant_descent(normalized_list :list, lr : float ,theta0 : float, th
 		theta0 = theta0 - tmp_theta0 
 		theta1 = theta1 - tmp_theta1
 		current_mse = calculate_mse (normalized_list, theta0, theta1) #lower is better duh
-		if abs(previous_mse - current_mse) < 0.000001 :
+		if previous_mse != 0 and abs(previous_mse - current_mse) / previous_mse < 0.0001:
 			print(f"Convergence atteinte à l'itération {i}")
 			break
 		previous_mse = current_mse

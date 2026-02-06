@@ -33,6 +33,8 @@ def visualize_data(file_path :str, min_km : float, max_km :float, max_price : fl
 	
 	for i in range (len(y_values)):
 		real_price = y_values[i]
+		if (real_price == 0):
+			continue
 		predicted_price = y_regression[i]
 		accuracy_list.append(abs(real_price - predicted_price) / real_price * 100)
 
@@ -44,4 +46,5 @@ def visualize_data(file_path :str, min_km : float, max_km :float, max_price : fl
 	plt.ylabel('Prix')
 	plt.xticks(rotation=45)  
 	plt.show()
+	f.close()
 	return (error)
